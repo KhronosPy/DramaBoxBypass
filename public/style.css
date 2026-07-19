@@ -12,14 +12,18 @@
 body {
     margin: 0;
     min-height: 100vh;
+    overflow: hidden;
     background: linear-gradient(135deg, #111827, #1e293b);
 }
 
 .app {
     display: grid;
-    grid-template-columns: minmax(280px, 420px) 1fr;
-    gap: 1.5rem;
-    padding: 1.2rem;
+    grid-template-columns: minmax(280px, 420px) minmax(0, 1fr);
+    gap: 1.2rem;
+    padding: 1rem;
+    height: 100vh;
+    max-height: 100vh;
+    overflow: hidden;
 }
 
 .panel,
@@ -28,13 +32,24 @@ body {
     border: 1px solid rgba(148, 163, 184, 0.2);
     border-radius: 16px;
     padding: 1.25rem;
-    max-height: 670px;
-    min-height: 670px;
+    min-height: 0;
+    overflow: hidden;
     box-shadow: 0 12px 40px rgba(2, 6, 23, 0.35);
 }
 
-.player-panel{
-    padding: 0rem;
+.panel {
+    display: flex;
+    flex-direction: column;
+}
+
+.player-panel {
+    padding: 0;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    border-color: rgba(148, 163, 184, 0)!important;
 }
 
 form {
@@ -90,9 +105,12 @@ button:hover {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(70px, 1fr));
     gap: 0.6rem;
-    max-height: 280px;
+    flex: 1 1 auto;
+    min-height: 0;
     overflow: auto;
     padding-right: 0.3rem;
+    padding-bottom: 0.2rem;
+    margin-top: 0.2rem;
 }
 
 .episode-grid button {
@@ -104,10 +122,55 @@ button:hover {
 
 video {
     width: 100%;
-    min-height: 480px;
-    max-height: 670px;
+    height: 100%;
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
     border-radius: 12px;
     background: #020617;
+}
+
+video:focus,
+video:active,
+video.active,
+video.highlight,
+video:focus-within,
+video:focus-visible {
+  border-color: rgba(148, 163, 184, 0) !important;
+  outline: none !important; /* Removes the default blue/chrome outline ring */
+  box-shadow: none !important; /* Removes any highlight glow effects */
+}
+
+.next-episode-prompt {
+    position: absolute;
+    right: 1rem;
+    bottom: 1rem;
+    z-index: 1000;
+    padding: 0.65rem 0.85rem;
+    border-radius: 999px;
+    background: rgba(2, 6, 23, 0.92);
+    color: #f8fafc;
+    border: 1px solid rgba(56, 189, 248, 0.45);
+    box-shadow: 0 10px 30px rgba(2, 6, 23, 0.35);
+    font-weight: 700;
+    cursor: pointer;
+    backdrop-filter: blur(6px);
+}
+
+.next-episode-prompt strong {
+    color: #38bdf8;
+}
+
+#next-episode-dismiss {
+    margin-left: 0.45rem;
+    padding: 0.15rem 0.4rem;
+    border-radius: 999px;
+    border: none;
+    background: transparent;
+    color: #f8fafc;
+    font-size: 0.95rem;
+    font-weight: 800;
+    cursor: pointer;
 }
 
 @media (max-width: 900px) {
