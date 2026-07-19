@@ -1,0 +1,12 @@
+{
+  "name": "dramabox-scrapper-ui",
+  "version": "1.0.0",
+  "description": "Simple Node front-end for DramaBox episode browsing and HLS playback",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.19.2"
+  }
+}

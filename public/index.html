@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>DramaBox Episode Player</title>
+    <link rel="stylesheet" href="/style.css" />
+    <script src="https://cdn.jsdelivr.net/npm/hls.js@1.5.17/dist/hls.min.js"></script>
+</head>
+
+<body class="app-body">
+    <main class="app">
+        <section class="panel">
+            <h1>DramaBox Bypass</h1>
+            <p>Get your key here: <a href="https://t.me/dramaboxplusbot" target="_blank" rel="noopener noreferrer">Telegram BOT</a></p>
+
+            <form id="search-form">
+                <div class="label-input">
+                    <label class="form-label">API key</label>
+                    <input class="form-input" id="api-key" type="text" placeholder="Your API key" required />
+                </div>
+                <div class="label-input">
+                    <label class="form-label">Drama ID</label>
+                    <input class="form-input" id="drama-id" type="text" placeholder="42000021344" required />
+                </div>
+                <button type="submit">Search</button>
+            </form>
+
+            <div id="status" class="status">Waiting for input.</div>
+            <div id="episode-buttons" class="episode-grid"></div>
+        </section>
+
+        <section class="player-panel">
+            <video id="player" controls autoplay playsinline></video>
+        </section>
+    </main>
+
+    <script src="/app.js"></script>
+</body>
+
+</html>
