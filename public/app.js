@@ -194,51 +194,29 @@ async function loadEpisode(episodeNumber) {
   clearNextPrompt();
   currentEpisode = episodeNumber;
   setStatus(`Loading episode ${episodeNumber}...`);
-  
+
   try {
-    const url = `/api/hls?apiKey=${encodeURIComponent(currentApiKey)}&id=${encodeURIComponent(currentDramaId)}&ep=${episodeNumber}`;
+    const url = `/apipm/hls?apiKey=${encodeURIComponent(currentApiKey)}&id=${encodeURIComponent(currentDramaId)}&ep=${episodeNumber}`;
     const response = await fetch(url);
-    const text = await response.text();
+    const data = await response.json();
 
     if (!response.ok) {
-      throw new Error(`playlist request failed (${response.status}): ${text.slice(0, 180)}`);
+      throw new Error(data.error || `media request failed (${response.status})`);
     }
 
-    if (!text.trim().startsWith('#EXTM3U')) {
-      throw new Error(`received invalid playlist data: ${text.slice(0, 180)}`);
+    const sourceUrl = data.url || data.sourceUrl || data.mp4Url || data.videoUrl;
+    if (!sourceUrl) {
+      throw new Error('No playable media URL returned.');
     }
 
     destroyHls();
 
-    if (window.Hls && window.Hls.isSupported()) {
-      hls = new window.Hls();
-      hls.attachMedia(video);
-      hls.on(window.Hls.Events.ERROR, (_event, data) => {
-        if (data.fatal) {
-          setStatus(`Playback error: ${data.type} - ${data.details}`);
-        }
-      });
-
-      const blob = new Blob([text], { type: 'application/vnd.apple.mpegurl' });
-      const objectUrl = URL.createObjectURL(blob);
-      hls.loadSource(objectUrl);
-      hls.on(window.Hls.Events.MANIFEST_PARSED, () => {
-        video.play().catch(() => {});
-        setStatus(`Playing episode ${episodeNumber}.`);
-        if (currentEpisode < totalEpisodes) {
-          setupEndCountdown();
-        }
-      });
-    } else {
-      const blob = new Blob([text], { type: 'application/vnd.apple.mpegurl' });
-      const objectUrl = URL.createObjectURL(blob);
-      video.src = objectUrl;
-      video.load();
-      video.play().catch(() => {});
-      setStatus(`Playing episode ${episodeNumber}.`);
-      if (currentEpisode < totalEpisodes) {
-        setupEndCountdown();
-      }
+    video.src = sourceUrl;
+    video.load();
+    video.play().catch(() => {});
+    setStatus(`Playing episode ${episodeNumber}${data.quality ? ` (${data.quality})` : ''}.`);
+    if (currentEpisode < totalEpisodes) {
+      setupEndCountdown();
     }
   } catch (error) {
     setStatus(`Playback failed: ${error.message}`);
@@ -274,6 +252,7 @@ form.addEventListener('submit', async (event) => {
   setStatus('Fetching episode list...');
 
   try {
+    //actualmente hay un error con el lenguaje español, por lo que se usara el default "en"
     const response = await fetch(`/api/episodes?apiKey=${encodeURIComponent(currentApiKey)}&id=${encodeURIComponent(currentDramaId)}&lang=es`);
     const data = await response.json();
 
