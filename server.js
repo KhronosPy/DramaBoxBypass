@@ -47,7 +47,7 @@ app.get('/api/episodes', async (req, res) => {
   }
 
   try {
-    const episodesUrl = `https://api.hoshiyomi.my.id/api/dramaboxv2/allepisode?id=${encodeURIComponent(id)}&lang=es&q=${Date.now()}`;
+    const episodesUrl = `https://api.hoshiyomi.my.id/api/dramaboxv2/allepisode?id=${encodeURIComponent(id)}&lang=es`;
     
     console.log(`Fetching episodes from: ${episodesUrl}`);
     const response = await fetch(
@@ -88,7 +88,7 @@ app.get('/api/hls', async (req, res) => {
 
   try {
     //actualmente hay un error con el redis, opr lo que se agrega un query param "q" con el timestamp actual para evitar cache
-    const remoteUrl = `https://api.hoshiyomi.my.id/api/dramaboxv2/episode?id=${encodeURIComponent(id)}&ep=${encodeURIComponent(ep)}&q=${Date.now()}&lang=es`;
+    const remoteUrl = `https://api.hoshiyomi.my.id/api/dramaboxv2/episode?id=${encodeURIComponent(id)}&ep=${encodeURIComponent(ep)}&q=1080p`;
     console.log(`Fetching episode media from: ${remoteUrl}`);
     const response = await fetch(remoteUrl, {
       headers: {
