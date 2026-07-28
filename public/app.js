@@ -196,7 +196,7 @@ async function loadEpisode(episodeNumber) {
   setStatus(`Loading episode ${episodeNumber}...`);
 
   try {
-    const url = `/apipm/hls?apiKey=${encodeURIComponent(currentApiKey)}&id=${encodeURIComponent(currentDramaId)}&ep=${episodeNumber}`;
+    const url = `/api/hls?apiKey=${encodeURIComponent(currentApiKey)}&id=${encodeURIComponent(currentDramaId)}&ep=${episodeNumber}`;
     const response = await fetch(url);
     const data = await response.json();
 
@@ -252,8 +252,7 @@ form.addEventListener('submit', async (event) => {
   setStatus('Fetching episode list...');
 
   try {
-    //actualmente hay un error con el lenguaje español, por lo que se usara el default "en"
-    const response = await fetch(`/api/episodes?apiKey=${encodeURIComponent(currentApiKey)}&id=${encodeURIComponent(currentDramaId)}&lang=es`);
+    const response = await fetch(`/api/episodes?apiKey=${encodeURIComponent(currentApiKey)}&id=${encodeURIComponent(currentDramaId)}`);
     const data = await response.json();
 
     if (!response.ok) {

@@ -87,7 +87,7 @@ app.get('/api/hls', async (req, res) => {
   }
 
   try {
-    //actualmente hay un problema con el lenguaje español, por lo que se usara el default "en"
+    //actualmente hay un error con el redis, opr lo que se agrega un query param "q" con el timestamp actual para evitar cache
     const remoteUrl = `https://api.hoshiyomi.my.id/api/dramaboxv2/episode?id=${encodeURIComponent(id)}&ep=${encodeURIComponent(ep)}&q=${Date.now()}&lang=es`;
     console.log(`Fetching episode media from: ${remoteUrl}`);
     const response = await fetch(remoteUrl, {
