@@ -17,7 +17,7 @@ app.get('/api/episodes', async (req, res) => {
 
   try {
     const response = await fetch(
-      `https://api.hoshiyomi.my.id/api/dramabox/allepisode?id=${encodeURIComponent(id)}&lang=${encodeURIComponent(lang)}`,
+      `https://api.hoshiyomi.my.id/api/dramaboxv2/allepisode?id=${encodeURIComponent(id)}&lang=${encodeURIComponent(lang)}`,
       {
         headers: {
           'X-API-Key': apiKey,
@@ -53,7 +53,7 @@ app.get('/api/hls', async (req, res) => {
   }
 
   try {
-    const remoteUrl = `https://api.hoshiyomi.my.id/api/dramabox/hls?id=${encodeURIComponent(id)}&ep=${encodeURIComponent(ep)}`;
+    const remoteUrl = `https://api.hoshiyomi.my.id/api/dramaboxv2/hls?id=${encodeURIComponent(id)}&ep=${encodeURIComponent(ep)}`;
     const response = await fetch(remoteUrl, {
       headers: {
         'X-API-Key': apiKey,
