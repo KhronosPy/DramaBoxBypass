@@ -73,7 +73,7 @@ label {
 }
 
 .form-input {
-    width: 280px !important;
+    width: 100% !important;
 }
 
 input,
