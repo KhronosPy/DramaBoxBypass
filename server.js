@@ -38,6 +38,9 @@ function pickBestMediaUrl(data) {
 
 app.use(express.static(path.join(__dirname, 'public')));
 
+//expose plyr
+app.use('/plyr', express.static('node_modules/plyr/dist'))
+
 app.get('/api/episodes', async (req, res) => {
   const apiKey = req.query.apiKey;
   const id = req.query.id;
